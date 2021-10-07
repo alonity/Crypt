@@ -12,14 +12,14 @@
  *
  * @license MIT
  *
- * @version 1.0.0
+ * @version 1.0.1
  *
  */
 
 namespace alonity\crypt;
 
 class Crypt {
-    const VERSION = '1.0.0';
+    const VERSION = '1.0.1';
 
     /**
      * Random string by data
@@ -38,13 +38,11 @@ class Crypt {
             $length = mt_rand(0, $len-1);
         }
 
-        $string = "";
+        $split = preg_split("//u", $data, -1, PREG_SPLIT_NO_EMPTY);
 
-        for($i = 0; $i < $length; $i++){
-            $string .= $data[mt_rand(0, $len-1)];
-        }
+        shuffle($split);
 
-        return $string;
+        return mb_substr(implode('', $split), 0, $length, 'UTF-8');
     }
 
     /**
